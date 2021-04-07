@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Хранилище ScheduleOfConsModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Consultation">
+    <Key>
+      <PropertyRef Name="TeacherName" />
+      <PropertyRef Name="StudentName" />
+      <PropertyRef Name="Date" />
+    </Key>
+    <Property Name="TeacherName" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="StudentName" Type="nvarchar" MaxLength="6" Nullable="false" />
+    <Property Name="Date" Type="date" Nullable="false" />
+    <Property Name="Time" Type="time" Precision="7" Nullable="false" />
+    <Property Name="Auditorium" Type="nvarchar" MaxLength="6" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Student">
+    <Key>
+      <PropertyRef Name="GradebookNum" />
+    </Key>
+    <Property Name="GradebookNum" Type="nvarchar" MaxLength="6" Nullable="false" />
+    <Property Name="FullName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Phone" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="DiplomSubject" Type="nvarchar" MaxLength="70" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Teacher">
+    <Key>
+      <PropertyRef Name="TableNumber" />
+    </Key>
+    <Property Name="TableNumber" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="FullName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Department" Type="nvarchar" MaxLength="70" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__Consultat__Stude__4E88ABD4">
+    <End Role="Student" Type="Self.Student" Multiplicity="1" />
+    <End Role="Consultation" Type="Self.Consultation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Student">
+        <PropertyRef Name="GradebookNum" />
+      </Principal>
+      <Dependent Role="Consultation">
+        <PropertyRef Name="StudentName" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Consultat__Teach__4D94879B">
+    <End Role="Teacher" Type="Self.Teacher" Multiplicity="1" />
+    <End Role="Consultation" Type="Self.Consultation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Teacher">
+        <PropertyRef Name="TableNumber" />
+      </Principal>
+      <Dependent Role="Consultation">
+        <PropertyRef Name="TeacherName" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Хранилище ScheduleOfConsModelContainer">
+    <EntitySet Name="Consultation" EntityType="Self.Consultation" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Student" EntityType="Self.Student" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Teacher" EntityType="Self.Teacher" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__Consultat__Stude__4E88ABD4" Association="Self.FK__Consultat__Stude__4E88ABD4">
+      <End Role="Student" EntitySet="Student" />
+      <End Role="Consultation" EntitySet="Consultation" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Consultat__Teach__4D94879B" Association="Self.FK__Consultat__Teach__4D94879B">
+      <End Role="Teacher" EntitySet="Teacher" />
+      <End Role="Consultation" EntitySet="Consultation" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
